@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plant Leaf Disease Detection - Login</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      height: 100%; width: 100%;
+      background: url("https://i.pinimg.com/1200x/5d/e9/bf/5de9bfb0b92d444a9f99bb9918f84a42.jpg") no-repeat center center/cover;
+      z-index: -1;
+      opacity: 0;
+      transform: scale(1) translate(0, 0);
+      animation: fadeAndZoom 20s ease-in-out forwards;
+    }
+    @keyframes fadeAndZoom { 
+      0% { opacity: 0; } 
+      100% { opacity: 1; transform: scale(1.1); } 
+    }
+    .login-box {
+      background: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      width: 320px;
+      text-align: center;
+      animation: fadeInBox 2s ease-in;
+      position: relative;
+    }
+    @keyframes fadeInBox { 
+      from { opacity:0; transform: scale(0.9);} 
+      to { opacity:1; transform: scale(1);} 
+    }
+    .login-box h2 { 
+      margin-bottom: 20px; 
+      color: #4caf50; 
+    }
+    .login-box input[type="text"], 
+    .login-box input[type="password"], 
+    .login-box input[type="email"] {
+      width: 90%; 
+      padding: 10px; 
+      margin: 10px 0;
+      border: 1px solid #ccc; 
+      border-radius: 5px;
+    }
+    .login-box button {
+      width: 95%; 
+      padding: 10px; 
+      background-color: #4caf50; 
+      border: none; 
+      color: white;
+      font-weight: bold; 
+      border-radius: 5px; 
+      cursor: pointer;
+    }
+    .login-box button:hover { background-color: #388e3c; }
+    .footer { 
+      margin-top: 15px; 
+      font-size: 0.9em; 
+      color: #666; 
+      opacity: 0.8; 
+    }
+    .toggle-link { 
+      margin-top: 10px; 
+      font-size: 0.9em; 
+      color: #007bff; 
+      cursor: pointer; 
+      display: inline-block; 
+    }
+    .hidden { display: none; }
+
+    /* Popup Message Styles */
+    .popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #f44336; /* red for error */
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 999;
+      display: none;
+      font-weight: bold;
+    }
+    .popup.success { background-color: #4caf50; } /* green for success */
+  </style>
+</head>
+<body>
+
+  <div class="popup" id="popup-message"></div>
+
+  <div class="login-box">
+    <!-- Login Form -->
+    <div id="login-form">
+      <h2>Login</h2>
+      <form action="{{ url_for('login') }}" method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required><br>
+        <input type="password" name="password" placeholder="Enter Password" required><br>
+        <button type="submit">Login</button>
+      </form>
+      <div class="toggle-link" onclick="toggleForms()">Don't have an account? Sign Up</div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" class="hidden">
+      <h2>Sign Up</h2>
+      <form action="{{ url_for('signup') }}" method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required><br>
+        <input type="email" name="email" placeholder="Enter Email" required><br>
+        <input type="password" name="password" placeholder="Enter Password" required><br>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="toggle-link" onclick="toggleForms()">Already have an account? Login</div>
+    </div>
+
+    <div class="footer">©️ 2025 Plant Leaf Disease Detection System</div>
+  </div>
+
+  <script>
+    function toggleForms() {
+      document.getElementById("login-form").classList.toggle("hidden");
+      document.getElementById("signup-form").classList.toggle("hidden");
+    }
+
+    // Show popup if message is passed from Flask
+    window.onload = function() {
+      const message = "{{ message }}";
+      const success = "{{ success }}";
+      if (message) {
+        const popup = document.getElementById("popup-message");
+        popup.innerText = message;
+        popup.classList.add(success === "True" ? "success" : "");
+        popup.style.display = "block";
+        setTimeout(() => { popup.style.display = "none"; }, 4000);
+      }
+    }
+  </script>
+
+</body> 
+</html>

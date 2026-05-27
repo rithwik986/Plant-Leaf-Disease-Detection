@@ -1,0 +1,7 @@
+*.keras
+*.h5
+model/
+uploads/
+venv/
+__pycache__/
+.ipynb_checkpoints/

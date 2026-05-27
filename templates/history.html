@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        table {
+            width: 95%;
+            margin: auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        thead {
+            background: #43a047;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background: #e8f5e9;
+            transform: scale(1.01);
+            transition: 0.2s ease-in-out;
+        }
+
+        img {
+            max-width: 80px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background: #43a047;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        a:hover {
+            background: #2e7d32;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-link a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="back-link">
+        <a href="{{ url_for('home') }}">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <h2>Your Detection History</h2>
+    {% if records %}
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Leaf Name</th>
+                <th>Confidence</th>
+                <th>Image</th>
+                <th>Moisture</th>
+                <th>Water</th>
+                <th>Causes</th>
+                <th>Supplements</th>
+                <th>Detected At</th>
+                <th>Download PDF</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ r.leaf_name }}</td>
+                <td>{{ r.confidence }}%</td>
+                <td>
+                    {% if r.filename %}
+                    <img src="{{ url_for('static', filename='uploads/' + r.filename) }}" alt="leaf image">
+                    {% endif %}
+                </td>
+                <td>{{ r.moisture }}</td>
+                <td>{{ r.water }}</td>
+                <td>{{ r.causes }}</td>
+                <td>{{ r.supplements }}</td>
+                <td>{{ r.detected_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('download_pdf', disease_name=r.leaf_name, filename=r.filename) }}?confidence={{ r.confidence }}">PDF</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No detections yet!</p>
+    {% endif %}
+</body>
+</html>

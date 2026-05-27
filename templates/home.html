@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSmart Platform</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-size: 1.8em;
+      /* font-weight: bold; */
+      color: white;
+    }
+
+    .navbar .logo span {
+      color: #90ee90;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .navbar ul li {
+      margin: 0 15px;
+      position: relative;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      /* font-weight: bold; */
+      transition: color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+      color: #90ee90;
+    }
+
+    /* Dropdown */
+    li .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: white;
+      color: black;
+      list-style: none;
+      padding: 5px 0;
+      margin: 0;
+      min-width: 120px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    li .dropdown li a {
+      display: block;
+      padding: 8px 12px;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    li .dropdown li a:hover {
+      background-color: #7CFC00;
+      color: white;
+    }
+
+    li:hover .dropdown {
+      display: block;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100dvh;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url("https://i.pinimg.com/1200x/5d/e9/bf/5de9bfb0b92d444a9f99bb9918f84a42.jpg") no-repeat center center / cover;
+      z-index: -1;
+      opacity: 0;
+      animation: fadeAndZoom 6s ease forwards;
+    }
+
+    @keyframes fadeAndZoom {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      top: 40%;
+      transform: translateY(-40%);
+      padding: 0 20px;
+      animation: slideUp 1.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(-40%);
+        opacity: 1;
+      }
+    }
+
+    .hero-content h1 {
+      font-size: 2.8em;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .hero-content p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .hero-content .buttons button {
+      padding: 12px 25px;
+      margin: 0 15px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .hero-content .buttons .primary {
+      background: #7CFC00;
+      color: white;
+    }
+
+    .hero-content .buttons .primary:hover {
+      background: #32CD32;
+      transform: scale(1.1);
+    }
+
+    .hero-content .buttons .secondary {
+      background: #7CFC00;
+      color: white;
+    }
+
+    .hero-content .buttons .secondary:hover {
+      background: #32CD32;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* Contact Section */
+    #contact {
+      background-color: #f4f4f4;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    #contact h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #contact p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    footer {
+      background-color: #006400;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">Agri<span>Smart</span></div>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('getstarted') }}">Start Detection</a></li>
+      <li><a href="{{ url_for('supplements') }}">Supplements</a></li>
+      <li><a href="{{ url_for('contacts') }}">Contact</a></li> {% if session.get('username') %} <li
+        style="margin-left:auto;"> <span style="color:white; font-weight:bold; cursor:pointer;"> {{ session['username']
+          }} &#9662; </span>
+        <ul class="dropdown">
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          <li><a href="{{ url_for('history') }}">My Disease</a></li>
+        </ul>
+      </li> {% endif %}
+    </ul>
+  </nav>
+  <section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <h1>Plants Exist in the Weather and Light Rays That Surround Them</h1>
+      <p>Empowering Agriculture with Smart AI Solutions and Sustainable Practices.</p>
+      <div class="buttons"> <a href="{{ url_for('getstarted') }}"><button class="primary">GET STARTED</button></a>
+        <button class="secondary"
+          onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">CONTACT US</button>
+      </div>
+    </div>
+  </section>
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <strong>henritamariya@gmail.com</strong></p>
+    <p>Phone: <strong>+91 7483508354</strong></p>
+    <p>We'd love to hear from you. Reach out with your queries!</p>
+  </section>
+  <footer> &copy; 2025 AgriSmart Platform | Email: henritamariya@gmail.com | Contact: +91 7483508354 </footer>
+</body>
+
+</html>

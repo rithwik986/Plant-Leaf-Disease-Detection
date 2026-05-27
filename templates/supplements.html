@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supplements & Fertilizers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background Animation */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("https://images.unsplash.com/photo-1590490357330-7729ce99b3c8") no-repeat center center/cover;
+      z-index: -1;
+      opacity: 0;
+      transform: scale(1) translate(0, 0);
+      animation: fadeAndZoom 5s ease-in-out forwards;
+    }
+
+    @keyframes fadeAndZoom {
+      0% {
+        opacity: 0;
+        transform: scale(1) translate(0, 0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1.1) translate(-2%, -2%);
+      }
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      color: white;
+      font-weight: 500;
+    }
+
+    nav .brand {
+      font-size: 1.5em;
+      color: white;
+      font-weight: 700;
+    }
+
+    nav .brand span {
+      color: #90ee90;
+      font-weight: 700;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 25px;
+      font-size: 1em;
+    }
+
+    nav .nav-links a,
+    nav .user a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links a:hover {
+      color: #90ee90;
+    }
+
+    nav .user {
+      position: relative;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    nav .user::after {
+      content: " ▼";
+      font-size: 0.85em;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Container and page styles */
+    .container {
+      max-width: 1100px;
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeInBox 2s ease-in;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    @keyframes fadeInBox {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      color: #4caf50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .card {
+      flex: 1 1 240px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .card img {
+      width: 140px;
+      height: 160px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 15px;
+      border-radius: 8px;
+      border: 3px solid #4caf50;
+      background: #fff;
+    }
+
+    .diseased {
+      color: red;
+      font-weight: bold;
+    }
+
+    .healthy {
+      color: green;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #4caf50;
+      color: white;
+      margin-top: 40px;
+      border-radius: 0 0 15px 15px;
+      font-weight: 600;
+    }
+    /* Navbar */
+    .navbar {
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-size: 1.9em;
+      /* font-weight: bold; */
+      color: white;
+    }
+
+    .navbar .logo span {
+      color: #90ee90;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .navbar ul li {
+      margin: 0 15px;
+      position: relative;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      /* font-weight: bold; */
+      transition: color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+      color: #90ee90;
+    }
+
+    /* Dropdown */
+    li .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: white;
+      color: black;
+      list-style: none;
+      padding: 5px 0;
+      margin: 0;
+      min-width: 120px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    li .dropdown li a {
+      display: block;
+      padding: 8px 12px;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    li .dropdown li a:hover {
+      background-color: #7CFC00;
+      color: white;
+    }
+
+    li:hover .dropdown {
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Agri<span>Smart</span></div>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('getstarted') }}">Start Detection</a></li>
+      <li><a href="{{ url_for('supplements') }}">Supplements</a></li>
+      <li><a href="{{ url_for('contacts') }}">Contact</a></li>
+      
+
+      {% if session.get('username') %}
+      <li style="margin-left:auto;">
+        <span style="color:white; font-weight:bold; cursor:pointer;">
+          {{ session['username'] }} &#9662;
+        </span>
+        <ul class="dropdown">
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          <li><a href="{{ url_for('history') }}">My Disease</a></li>
+        </ul>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!-- Main container -->
+  <div class="container">
+    <h1>🛒 Supplements & Fertilizers 🛒</h1>
+    <p class="subtitle">Choose from high-quality supplements and fertilizers for diseased and healthy plants</p>
+
+    <div class="products">
+      <!-- Diseased Supplements -->
+      <div class="card">
+        <img src="{{ url_for('static', filename='Prozol.jpeg') }}" alt="Prozol Supplement" />
+        <p>Supplements <span class="diseased">(Diseased)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='MagicFungiX.jpeg') }}" alt="Magic FungiX" />
+        <p>Supplements <span class="diseased">(Diseased)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='OrganicFungicide.jpeg') }}" alt="Organic Fungicide" />
+        <p>Supplements <span class="diseased">(Diseased)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='BioFungicide.jpeg') }}" alt="Bio Fungicide" />
+        <p>Supplements <span class="diseased">(Diseased)</span></p>
+      </div>
+
+      <!-- Healthy Fertilizers -->
+      <div class="card">
+        <img src="{{ url_for('static', filename='TripleBooster.jpeg') }}" alt="Triple Booster" />
+        <p>Fertilizer <span class="healthy">(Healthy)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='SuperGrowFertilizer.jpeg') }}" alt="Super Grow Fertilizer" />
+        <p>Fertilizer <span class="healthy">(Healthy)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='OrganicBooster.jpeg') }}" alt="Organic Booster" />
+        <p>Fertilizer <span class="healthy">(Healthy)</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ url_for('static', filename='PlantTonic.jpeg') }}" alt="Plant Tonic" />
+        <p>Fertilizer <span class="healthy">(Healthy)</span></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Plant Leaf Disease Detection | Supplements & Fertilizers
+  </footer>
+</body>
+
+</html>
